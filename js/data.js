@@ -1,40 +1,33 @@
-const USER_COUNT = 30;
-const PHOTO_COUNT = 25;
-const MIN_AVATAR = 1;
-const MAX_AVATAR = 6;
+import {NAMES, DESCRIPTIONS, USER_COUNT, PHOTO_COUNT, MIN_AVATAR, MAX_AVATAR, MIN_LIKES, MAX_LIKES, MESSAGES} from './constants.js';
+import { getRandomInteger, getSetRandomInteger, makeCounter} from './utilits.js';
 
-const NAMES = [
-  'Никита',
-  'Владислава',
-  'Марк',
-  'Незнакомец',
-  'Дина',
-  'Святослав',
-  'Кирилл',
-  'Ангелина',
-  'Дмитрий',
-  'Роман',
-  'Оксана',
-];
+const getRandonArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const DESCRIPTIONS = [
-  'Синие камни.',
-  'Рыжее пламя.',
-  'Фиолетовые качели.',
-  'Грустный человек.',
-  'Параллельные линии.',
-  'Древний дуб.',
-  'Поверженный воин.',
-  'Опавшая листва.',
-];
+const commentPersonID = (getSetRandomInteger(1, USER_COUNT, USER_COUNT));
+const arrObjID = (getSetRandomInteger(1, PHOTO_COUNT, PHOTO_COUNT));
+const numberPhoto = (getSetRandomInteger(1, PHOTO_COUNT, PHOTO_COUNT));
 
-const MESSAGES = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
-];
+const arrObjIDCounter = makeCounter(PHOTO_COUNT);
+const commentPersonIDCounter = makeCounter(USER_COUNT);
+const numberPhotoCounter = makeCounter(PHOTO_COUNT);
 
-export {NAMES, DESCRIPTIONS, USER_COUNT, PHOTO_COUNT, MIN_AVATAR, MAX_AVATAR, MESSAGES};
+//Объект комментатора
+
+const createComment = () => ({
+  id: commentPersonID.arrRandom[commentPersonIDCounter(USER_COUNT)],
+  avatar: `img/avatar-${getRandomInteger(MIN_AVATAR, MAX_AVATAR)}.svg`,
+  message: getRandonArrayElement(MESSAGES),
+  name: getRandonArrayElement(NAMES),
+});
+
+//Оъект фотографии
+
+const getPhoto = () => ({
+  id: arrObjID.arrRandom[arrObjIDCounter()],
+  url: `photos/${numberPhoto.arrRandom[numberPhotoCounter()]}.jpg`,
+  description: getRandonArrayElement(DESCRIPTIONS),
+  likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
+  comments: Array.from({length: USER_COUNT}, createComment),
+});
+
+export const photos = Array.from({length: PHOTO_COUNT}, getPhoto);
