@@ -65,8 +65,8 @@ function getResult(workStart, workEnd, meetStart, meetLong) {
   return result;
 }
 
-//console.log(getResult('08:00', '17:30', '14:00', 90)); //eslint-disable-line
-//console.log(getResult('8:0', '10:0', '8:0', 120)); //eslint-disable-line
-//console.log(getResult('08:00', '14:30', '14:00', 90)); //eslint-disable-line
-//console.log(getResult('14:00', '17:30', '08:0', 90)); //eslint-disable-line
-//console.log(getResult('8:00', '17:30', '08:00', 900));//eslint-disable-line
+console.log(getResult('08:00', '17:30', '14:00', 90)); //eslint-disable-line
+console.log(getResult('8:0', '10:0', '8:0', 120)); //eslint-disable-line
+console.log(getResult('08:00', '14:30', '14:00', 90)); //eslint-disable-line
+console.log(getResult('14:00', '17:30', '08:0', 90)); //eslint-disable-line
+console.log(getResult('8:00', '17:30', '08:00', 900));//eslint-disable-line
