@@ -1,113 +1,37 @@
-// Вводные данные
-
-const commentPersonName = [
-  'Никита',
-  'Владислава',
-  'Марк',
-  'Незнакомец',
-  'Дина',
-  'Святослав',
-  'Кирилл',
-  'Ангелина',
-  'Дмитрий',
-  'Роман',
-  'Оксана',
-];
-
-const DESCRIPTIONS = [
-  'Синие камни.',
-  'Рыжее пламя.',
-  'Фиолетовые качели.',
-  'Грустный человек.',
-  'Параллельные линии.',
-  'Древний дуб.',
-  'Поверженный воин.',
-  'Опавшая листва.',
-];
-
-const userCount = 30;
-const PhotoCount = 25;
-
-const MESSAGES = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
-];
-
-// Создает случайное число
-
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-//Массив случайных неповторяемых чисел
-
-const getSetRandomInteger = (a, b, count) => {
-  const arrRandom = [];
-
-  function getArrElem(number) {
-    if (!arrRandom.includes(number)) {
-      arrRandom.push(number);
-    }
-  }
-
-  if((((a - b) + 1) >= count) || (((b - a) + 1) >= count)) {
-    while (arrRandom.length < count) {
-      getArrElem(getRandomInteger(a, b));
-    }
-  } else {
-    return 'Колличество необходимых целых чисел для создания больше возможных в данном промежутке';
-  }
-  return arrRandom;
-};
+import {NAMES, DESCRIPTIONS, USER_COUNT, PHOTO_COUNT, MIN_AVATAR, MAX_AVATAR, MESSAGES} from './data.js';
+import { getRandomInteger, getSetRandomInteger, makeCounter} from './utilits.js';
 
 const getRandonArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const commentPersonID = (getSetRandomInteger(1, 30, 30));
-const arrObjID = (getSetRandomInteger(1, 25, 25));
-const numberPhoto = (getSetRandomInteger(1, 25, 25));
+const commentPersonID = (getSetRandomInteger(1, USER_COUNT, USER_COUNT));
+const arrObjID = (getSetRandomInteger(1, PHOTO_COUNT, PHOTO_COUNT));
+const numberPhoto = (getSetRandomInteger(1, PHOTO_COUNT, PHOTO_COUNT));
 
-
-//Счетчик
-
-function makeCounter() {
-  let currentCount = 0;
-
-  return function() {
-    return currentCount++;
-  };
-}
-
-const arrObjIDCounter = makeCounter();
-const commentPersonIDCounter = makeCounter();
-const numberPhotoCounter = makeCounter();
+const arrObjIDCounter = makeCounter(PHOTO_COUNT);
+const commentPersonIDCounter = makeCounter(USER_COUNT);
+const numberPhotoCounter = makeCounter(PHOTO_COUNT);
 
 //Объект комментатора
 
-const createCommentPerson = () => ({
-  id: commentPersonID[commentPersonIDCounter()],
-  avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+const createComment = () => ({
+  id: commentPersonID.arrRandom[commentPersonIDCounter(USER_COUNT)],
+  avatar: `img/avatar-${getRandomInteger(MIN_AVATAR, MAX_AVATAR)}.svg`,
   message: getRandonArrayElement(MESSAGES),
-  name: getRandonArrayElement(commentPersonName),
+  name: getRandonArrayElement(NAMES),
 });
 
 //Оъект фотографии
 
-const arrObj = () => ({
-  id: arrObjID[arrObjIDCounter()],
-  url: `photos/${numberPhoto[numberPhotoCounter()]}.jpg`,
+const getPhoto = () => ({
+  id: arrObjID.arrRandom[arrObjIDCounter()],
+  url: `photos/${numberPhoto.arrRandom[numberPhotoCounter()]}.jpg`,
   description: getRandonArrayElement(DESCRIPTIONS),
-  likes: getRandonArrayElement(1, 25),
-  comments: Array.from({length: userCount}, createCommentPerson),
+  likes: getRandomInteger(1, PHOTO_COUNT - 1),
+  comments: Array.from({length: USER_COUNT}, createComment),
 });
-//const arrayPhotoObj = Array.from({length: PhotoCount}, arrObj);
 
-Array.from({length: PhotoCount}, arrObj);
+const photos = Array.from({length: PHOTO_COUNT}, getPhoto);
+const photo = Array.from({length: PHOTO_COUNT}, getPhoto);
 
-
+console.log(photos); //eslint-disable-line
+console.log(photo); //eslint-disable-line
