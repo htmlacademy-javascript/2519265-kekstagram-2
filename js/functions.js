@@ -46,23 +46,20 @@ getNumber(-8);
 // console.log(getNumber('1,5'));
 // console.log(getNumber('1 кефир, 0.5 батона'));
 
+const MINUTES_PER_HOUR = 60;
+
+const getMinutesPoint = (time) => {
+  const [hour, minutes] = time.split(':');
+  return hour * MINUTES_PER_HOUR + +minutes;
+};
+
 function getResult(workStart, workEnd, meetStart, meetLong) {
-  let result = false;
+  const workStartMinit = getMinutesPoint(workStart);
+  const workEndMinit = getMinutesPoint(workEnd);
+  const meetStartMinit = getMinutesPoint(meetStart);
+  const meetEndMinit = meetStartMinit + meetLong;
 
-  const workStartArr = workStart.split(':');
-  const workEndArr = workEnd.split(':');
-  const meetStartArr = meetStart.split(':');
-
-  const workStartMinit = workStartArr[0] * 60 + +workStartArr[1];
-  const workEndMinit = workEndArr[0] * 60 + +workEndArr[1];
-  const meetStartMinit = meetStartArr[0] * 60 + +meetStartArr[1];
-
-  if(((workEndMinit - workStartMinit) >= meetLong) && ((workEndMinit - meetStartMinit) <= (workEndMinit - workStartMinit))) {
-    if((workEndMinit - meetStartMinit) >= meetLong) {
-      result = true;
-    }
-  }
-  return result;
+  return ((meetStartMinit >= workStartMinit) && (meetEndMinit <= workEndMinit));
 }
 
 console.log(getResult('08:00', '17:30', '14:00', 90)); //eslint-disable-line
