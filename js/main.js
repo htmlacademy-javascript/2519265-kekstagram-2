@@ -1,3 +1,6 @@
 import { photos } from './data.js';
+import { createPhotosList } from './createPictures.js';
 
-console.log(photos); //eslint-disable-line
+const containerForPhoto = document.querySelector('.pictures');
+
+containerForPhoto.appendChild(createPhotosList(photos));
