@@ -40,3 +40,5 @@ export function makeCounter(maxCount) {
     return currentCount++;
   };
 }
+
+export const isEscape = (evt) => evt.key === 'Escape';

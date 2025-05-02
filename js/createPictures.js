@@ -1,15 +1,22 @@
+import { photos } from './data.js';
+
+const containerForPhoto = document.querySelector('.pictures');
 const photoElementTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-export const createPhotosList = function (photos) {
+const createPhotosList = (elements) => {
   const similarListFragment = document.createDocumentFragment();
 
-  photos.forEach(({url, description, comments, likes}) => {
+  elements.forEach(({id, url, description, comments, likes}) => {
     const photoElement = photoElementTemplate.cloneNode(true);
-    photoElement.querySelector('.picture__img').src = url;
-    photoElement.querySelector('.picture__img').alt = description;
+    const img = photoElement.querySelector('.picture__img');
+    photoElement.dataset.id = id;
+    img.src = url;
+    img.alt = description;
     photoElement.querySelector('.picture__comments').textContent = comments.length;
     photoElement.querySelector('.picture__likes').textContent = likes;
     similarListFragment.appendChild(photoElement);
   });
   return similarListFragment;
 };
+
+containerForPhoto.appendChild(createPhotosList(photos));
