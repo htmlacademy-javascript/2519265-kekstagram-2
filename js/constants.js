@@ -4,6 +4,7 @@ const MIN_AVATAR = 1;
 const MAX_AVATAR = 6;
 const MIN_LIKES = 15;
 const MAX_LIKES = 200;
+const VISIBLE_COMMENTS = 5;
 
 const NAMES = [
   'Никита',
@@ -37,6 +38,10 @@ const MESSAGES = [
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
+  'Забавное фото',
+  'Как мило',
+  'Вас даже не узнать',
+  'Никогда не видела подобного',
 ];
 
-export {NAMES, DESCRIPTIONS, USER_COUNT, PHOTO_COUNT, MIN_AVATAR, MAX_AVATAR, MIN_LIKES, MAX_LIKES, MESSAGES};
+export {NAMES, DESCRIPTIONS, USER_COUNT, PHOTO_COUNT, MIN_AVATAR, MAX_AVATAR, MIN_LIKES, MAX_LIKES, MESSAGES, VISIBLE_COMMENTS};

@@ -1,13 +1,12 @@
 import { isEscape } from './utilits.js';
 import { photos } from './data.js';
-import { createCommentNodeList, loadingMoreComments, removeComments } from './createComments.js';
+import { VISIBLE_COMMENTS } from './constants.js';
 
 const body = document.body;
 const containerForBigPhoto = document.querySelector('.big-picture');
 const wrapperForComments = containerForBigPhoto.querySelector('.social__comments');
 const commentEmptyNode = wrapperForComments.querySelector('li');
-const containerForPhoto = document.querySelector('.pictures');
-const buttonMoreComments = containerForBigPhoto.querySelector('.social__comments-loader');
+export const containerForPhoto = document.querySelector('.pictures');
 
 const onEscapePress = (evt) => {
   if(isEscape(evt)) {
@@ -21,24 +20,32 @@ const onButtonClosePress = () => {
   document.removeEventListener('click', onButtonClosePress);
 };
 
-function createMoreComment (evt, array) {
-  evt.preventDefault();
-  loadingMoreComments(array, wrapperForComments, commentEmptyNode, buttonMoreComments);
-}
+const clearCommentNodeList = () => {
+  wrapperForComments.textContent = '';
+};
 
 function closeUserModal () {
-  buttonMoreComments.removeEventListener('click', createMoreComment);
   containerForBigPhoto.classList.add('hidden');
-  buttonMoreComments.classList.remove('hidden');
-  removeComments(wrapperForComments);
+  clearCommentNodeList();
   body.classList.remove('modal-open');
 }
 
+const createCommentNodeList = (comments) => {
+  const similarListFragment = document.createDocumentFragment();
 
-const createBigPicture = ({url, likes, comments, description}) => {
-  const buttonCloseModal = containerForBigPhoto.querySelector('.big-picture__cancel');
-  //const buttonMoreComments = document.querySelector('.social__comments-loader');
+  for(let i = 0; i < VISIBLE_COMMENTS; i++) {
+    const comment = commentEmptyNode.cloneNode(true);
+    const commentImg = comment.querySelector('.social__picture');
 
+    commentImg.src = comments[i].avatar;
+    commentImg.alt = comments[i].name;
+    comment.querySelector('.social__text').textContent = comments[i].message;
+    similarListFragment.append(comment);
+  }
+  return similarListFragment;
+};
+
+export const createBigPicture = ({url, likes, comments, description}) => {
   containerForBigPhoto.classList.remove('hidden');
 
   containerForBigPhoto.querySelector('.big-picture__img').querySelector('img').src = url;
@@ -48,15 +55,13 @@ const createBigPicture = ({url, likes, comments, description}) => {
   containerForBigPhoto.querySelector('.social__caption').textContent = description;
 
   wrapperForComments.textContent = '';
-  const commentsList = createCommentNodeList(comments, (evt) => commentEmptyNode(evt, comments));
+  const commentsList = createCommentNodeList(comments);
 
   wrapperForComments.append(commentsList);
 
-  buttonMoreComments.addEventListener('click', loadingMoreComments(comments));
-
   document.addEventListener('keydown', (evt) => onEscapePress(evt));
 
-  buttonCloseModal.addEventListener('click', () => onButtonClosePress());
+  containerForBigPhoto.addEventListener('click', (evt) => onButtonClosePress(evt));
 };
 
 containerForPhoto.addEventListener('click', (evt) => {
@@ -72,6 +77,15 @@ containerForPhoto.addEventListener('click', (evt) => {
   for (const photo of photos) {
     if(photo.id === +idTarget) {
       createBigPicture(photo);
+
+      const commentCount = document.querySelector('.social__comment-count');
+      const commentLoader = document.querySelector('.comments-loader');
+      //----------------------------------------------
+
+      //----------------------------------------------
+
+      commentCount.classList.add('hidden');
+      commentLoader.classList.add('hidden');
       body.classList.add('modal-open');
     }
   }
