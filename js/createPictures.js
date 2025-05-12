@@ -1,9 +1,12 @@
-import { photos } from './data.js';
+import { createBigPicture } from './createBigPicture.js';
 
 const containerForPhoto = document.querySelector('.pictures');
 const photoElementTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const body = document.body;
+let localPhotos;
 
-const createPhotosList = (elements) => {
+export const renderCards = (elements) => {
+  localPhotos = [...elements];
   const similarListFragment = document.createDocumentFragment();
 
   elements.forEach(({id, url, description, comments, likes}) => {
@@ -16,7 +19,20 @@ const createPhotosList = (elements) => {
     photoElement.querySelector('.picture__likes').textContent = likes;
     similarListFragment.appendChild(photoElement);
   });
-  return similarListFragment;
+  containerForPhoto.appendChild(similarListFragment);
 };
 
-containerForPhoto.appendChild(createPhotosList(photos));
+containerForPhoto.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  const imgWithEvent = evt.target;
+  const idTarget = imgWithEvent.closest('.picture').dataset.id;
+
+  if (imgWithEvent === null) {
+    // Если клик выполнен не на кнопке, ничего не делаем
+    evt.stopPropagation();
+  }
+
+  const currentPhoto = localPhotos.find((photo) => photo.id === +idTarget);
+  body.classList.add('modal-open');
+  createBigPicture(currentPhoto);
+});

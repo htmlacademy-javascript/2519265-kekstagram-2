@@ -1,2 +1,4 @@
-import './createPictures.js';
-import './createBigPicture.js';
+import {photos} from './data.js';
+import {renderCards} from './createPictures.js';
+
+renderCards(photos);

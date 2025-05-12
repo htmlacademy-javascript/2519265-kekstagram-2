@@ -1,47 +1,54 @@
-import { VISIBLE_COMMENTS } from './constants.js';
+import {COMMENTS__STEP} from './constants.js';
 
-let startComment = 0;
-export let endComment = VISIBLE_COMMENTS;
+const commentTemplate = document.querySelector('.social__comment');
+const commentsContainer = document.querySelector('.social__comments');
+const totalStatistic = document.querySelector('.social__comment-total-count');
+const currentStatistic = document.querySelector('.social__comment-shown-count');
+const buttonMoreComments = document.querySelector('.social__comments-loader');
 
-export const createCommentNodeList = (comments, nodeForComment) => {
-  const similarListFragment = document.createDocumentFragment();
-  const visibleCommentsNode = document.querySelector('.social__comment-shown-count');
-  visibleCommentsNode.textContent = endComment;
+let localComments;
+let renderedComments = 0;
 
-  const getVisibleComments = () => {
+const renderComment = ({message, avatar, name}) => {
+  const comment = commentTemplate.cloneNode(true);
+  const userpic = comment.querySelector('.social__picture');
 
-    for(let i = startComment; i < endComment; i++) {
-      const comment = nodeForComment.cloneNode(true);
-      const commentImg = comment.querySelector('.social__picture');
+  userpic.src = avatar;
+  userpic.alt = name;
+  comment.querySelector('.social__text').textContent = message;
 
-      commentImg.src = comments[i].avatar;
-      commentImg.alt = comments[i].name;
-      comment.querySelector('.social__text').textContent = comments[i].message;
-      similarListFragment.append(comment);
-    }
-  };
-  getVisibleComments();
-  return similarListFragment;
+  return comment;
 };
 
-export const loadingMoreComments = (comments, container, emptyNode, button) => {
-  startComment += VISIBLE_COMMENTS;
-  if(comments.length < (endComment + VISIBLE_COMMENTS)) {
-    endComment = endComment + (comments.length - endComment);
+const renderStatistic = () => {
+  currentStatistic.textContent = renderedComments;
+};
+
+const renderLoaderButton = () => {
+  if(localComments.length) {
+    buttonMoreComments.classList.remove('hidden');
   } else {
-    endComment += VISIBLE_COMMENTS;
+    buttonMoreComments.classList.add('hidden');
   }
-
-  if(comments.length === endComment) {
-    button.classList.add('hidden');
-  }
-  const commentsList = createCommentNodeList(comments, emptyNode);
-  container.append(commentsList);
 };
 
-export const removeComments = (container) => {
-  startComment = 0;
-  endComment = VISIBLE_COMMENTS;
-  container.textContent = '';
+const renderComments = () => {
+  const fragment = document.createDocumentFragment();
+  localComments.splice(0, COMMENTS__STEP).forEach((item) => {
+    fragment.append(renderComment(item));
+    renderedComments++;
+  });
+  commentsContainer.append(fragment);
+  renderStatistic();
+  renderLoaderButton();
 };
 
+export const initComments = (comments) => {
+  localComments = [...comments];
+  commentsContainer.innerHTML = '';
+  totalStatistic.textContent = comments.length;
+  renderedComments = 0;
+  renderComments();
+};
+
+buttonMoreComments.addEventListener('click', renderComments);
