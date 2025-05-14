@@ -27,7 +27,7 @@ const getPhoto = () => ({
   url: `photos/${numberPhoto.arrRandom[numberPhotoCounter()]}.jpg`,
   description: getRandonArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
-  comments: Array.from({length: USER_COUNT}, createComment),
+  comments: Array.from({length: getRandomInteger(13, 30)}, createComment),
 });
 
 export const photos = Array.from({length: PHOTO_COUNT}, getPhoto);
