@@ -22,17 +22,12 @@ export const renderCards = (elements) => {
   containerForPhoto.appendChild(similarListFragment);
 };
 
-containerForPhoto.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  const imgWithEvent = evt.target;
-  const idTarget = imgWithEvent.closest('.picture').dataset.id;
-
-  if (imgWithEvent === null) {
-    // Если клик выполнен не на кнопке, ничего не делаем
-    evt.stopPropagation();
+containerForPhoto.addEventListener('click', ({target}) => {
+  const card = target.closest('.picture');
+  if(card) {
+    const idTarget = card.dataset.id;
+    const currentPhoto = localPhotos.find((photo) => photo.id === +idTarget);
+    body.classList.add('modal-open');
+    createBigPicture(currentPhoto);
   }
-
-  const currentPhoto = localPhotos.find((photo) => photo.id === +idTarget);
-  body.classList.add('modal-open');
-  createBigPicture(currentPhoto);
 });
