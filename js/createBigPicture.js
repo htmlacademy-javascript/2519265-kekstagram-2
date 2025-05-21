@@ -7,24 +7,24 @@ const containerForBigPhoto = document.querySelector('.big-picture');
 const buttonCloseModal = containerForBigPhoto.querySelector('.big-picture__cancel');
 
 const onEscapePress = (evt) => {
-  if(isEscape(evt)) {
+  if (isEscape(evt)) {
     closeUserModal();
     document.removeEventListener('keydown', onEscapePress);
   }
 };
 
 const onButtonClosePress = () => {
-  closeUserModal ();
+  closeUserModal();
   document.removeEventListener('click', onButtonClosePress);
 };
 
-function closeUserModal () {
+function closeUserModal() {
   containerForBigPhoto.classList.add('hidden');
   body.classList.remove('modal-open');
 }
 
 
-export const createBigPicture = ({url, likes, comments, description}) => {
+export const createBigPicture = ({ url, likes, comments, description }) => {
 
   containerForBigPhoto.classList.remove('hidden');
 

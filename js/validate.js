@@ -19,7 +19,7 @@ const checkLengthDescription = (value) => value.length <= MAX__DESCRIPTION;
 const getHashtags = (text) => text.toLowerCase().split(' ').filter((item) => item.length);
 
 const repeatHashtags = (value) => {
-    if(!value.trim().length) {
+  if (!value.trim().length) {
     return true;
   }
   const hashtags = getHashtags(value);
@@ -28,7 +28,7 @@ const repeatHashtags = (value) => {
 };
 
 const checkHashtags = (value) => {
-  if(!value.trim().length) {
+  if (!value.trim().length) {
     return true;
   }
   const hashtags = getHashtags(value);
@@ -36,12 +36,12 @@ const checkHashtags = (value) => {
 };
 
 const checkHashtagCount = (value) => {
-    if(!value.trim().length) {
+  if (!value.trim().length) {
     return true;
   }
   const hashtags = getHashtags(value);
   return hashtags.length <= HASHTAGS__COUNT;
-}
+};
 
 pristine.addValidator(
   description,

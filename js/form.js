@@ -1,4 +1,4 @@
-import {isValid} from './validate.js';
+import { isValid } from './validate.js';
 import { isEscape } from './utilits.js';
 
 const body = document.body;
@@ -8,41 +8,50 @@ const uploadFile = form.querySelector('#upload-file');
 const closeModalButton = form.querySelector('.img-upload__cancel');
 const description = form.querySelector('.text__description');
 const hashtagsElem = form.querySelector('.text__hashtags');
-const currentPhotoForUpload = form.querySelector('.img-upload__input').value;
+const currentPhotoForUpload = form.querySelector('.img-upload__input');
 
 const shownModal = (isShown = true) => {
-  if(isShown) {
+  if (isShown) {
     modal.classList.remove('hidden');
     body.classList.add('modal-open');
-    document.addEventListener('keydown', (evt) => onEscapePress(evt));
   } else {
     modal.classList.add('hidden');
     body.classList.remove('modal-open');
-    form.reset();
-    currentPhotoForUpload = '';
   }
 };
 
 const onEscapePress = (evt) => {
-  if((document.activeElement === description) || (document.activeElement === hashtagsElem)) {
+  if ((document.activeElement === description) || (document.activeElement === hashtagsElem)) {
     return evt;
-    }
-  if(isEscape(evt)) {
-	  shownModal(false);
-	  document.removeEventListener('keydown', onEscapePress);
+  }
+  if (isEscape(evt)) {
+    shownModal(false);
+    document.removeEventListener('keydown', onEscapePress);
   }
 };
 
-uploadFile.addEventListener('change', () => {
+const openModal = () => {
   shownModal();
+  document.addEventListener('keydown', (evt) => onEscapePress(evt));
+};
+
+const closeModal = () => {
+  shownModal(false);
+  form.reset();
+  currentPhotoForUpload.value = ' ';
+};
+
+uploadFile.addEventListener('change', () => {
+  openModal();
 });
 
 closeModalButton.addEventListener('click', () => {
-  shownModal(false);
+  closeModal();
 });
 
 form.addEventListener('submit', (evt) => {
-  if(!isValid()) {
+  if (!isValid()) {
     evt.preventDefault();
   }
 });
+
