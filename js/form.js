@@ -1,4 +1,4 @@
-import { isValid } from './validate.js';
+import { isValid, resetValidation } from './validate.js';
 import { isEscape } from './utilits.js';
 
 const body = document.body;
@@ -8,7 +8,6 @@ const uploadFile = form.querySelector('#upload-file');
 const closeModalButton = form.querySelector('.img-upload__cancel');
 const description = form.querySelector('.text__description');
 const hashtagsElem = form.querySelector('.text__hashtags');
-const currentPhotoForUpload = form.querySelector('.img-upload__input');
 
 const shownModal = (isShown = true) => {
   if (isShown) {
@@ -25,7 +24,7 @@ const onEscapePress = (evt) => {
     return evt;
   }
   if (isEscape(evt)) {
-    shownModal(false);
+    closeModal();
     document.removeEventListener('keydown', onEscapePress);
   }
 };
@@ -38,7 +37,7 @@ const openModal = () => {
 const closeModal = () => {
   shownModal(false);
   form.reset();
-  currentPhotoForUpload.value = ' ';
+  resetValidation();
 };
 
 uploadFile.addEventListener('change', () => {

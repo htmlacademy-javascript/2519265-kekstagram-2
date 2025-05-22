@@ -1,7 +1,6 @@
 const MAX__DESCRIPTION = 5;
 const HASHTAG__FORMULA = /^#[a-zA-Z0-9]{1,19}$/;
 const HASHTAGS__COUNT = 5;
-//const MIN__LENGTH__HASHTAG = 2;
 const MAX__LENGTH__HASHTAG = 20;
 
 const form = document.querySelector('.img-upload__form');
@@ -68,4 +67,8 @@ pristine.addValidator(
 );
 
 export const isValid = () => pristine.validate();
+
+export const resetValidation = () => {
+  pristine.reset();
+}
 
