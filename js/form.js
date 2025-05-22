@@ -19,6 +19,12 @@ const shownModal = (isShown = true) => {
   }
 };
 
+const closeModal = () => {
+  shownModal(false);
+  form.reset();
+  resetValidation();
+};
+
 const onEscapePress = (evt) => {
   if ((document.activeElement === description) || (document.activeElement === hashtagsElem)) {
     return evt;
@@ -32,12 +38,6 @@ const onEscapePress = (evt) => {
 const openModal = () => {
   shownModal();
   document.addEventListener('keydown', (evt) => onEscapePress(evt));
-};
-
-const closeModal = () => {
-  shownModal(false);
-  form.reset();
-  resetValidation();
 };
 
 uploadFile.addEventListener('change', () => {
