@@ -5,6 +5,9 @@ const MAX_AVATAR = 6;
 const MIN_LIKES = 15;
 const MAX_LIKES = 200;
 const COMMENTS__STEP = 5;
+const STEP__SCALE = 25;
+const MAX__SCALE = 100;
+const MIN__SCALE = 25;
 
 const NAMES = [
   'Никита',
@@ -44,4 +47,70 @@ const MESSAGES = [
   'Никогда не видела подобного',
 ];
 
-export {NAMES, DESCRIPTIONS, USER_COUNT, PHOTO_COUNT, MIN_AVATAR, MAX_AVATAR, MIN_LIKES, MAX_LIKES, MESSAGES, COMMENTS__STEP};
+const FilterEffectSaturation = [
+  {
+    effect: 'chrome',
+    settings: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1,
+      connect: 'lower',
+    }
+  },
+  {
+    effect: 'sepia',
+    settings: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1,
+      connect: 'lower',
+    }
+
+  },
+  {
+    effect: 'marvin',
+    settings: {
+      range: {
+        min: 0,
+        max: 100,
+      },
+      start: 100,
+      step: 1,
+      connect: 'lower',
+    }
+
+  },
+  {
+    effect: 'phobos',
+    settings: {
+      range: {
+        min: 0,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1,
+      connect: 'lower',
+    }
+
+  },
+  {
+    effect: 'heat',
+    settings: {
+      range: {
+        min: 1,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1,
+      connect: 'lower',
+    }
+  },
+];
+
+export { NAMES, DESCRIPTIONS, USER_COUNT, PHOTO_COUNT, MIN_AVATAR, MAX_AVATAR, MIN_LIKES, MAX_LIKES, MESSAGES, COMMENTS__STEP, FilterEffectSaturation, MAX__SCALE, MIN__SCALE, STEP__SCALE };

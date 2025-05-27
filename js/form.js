@@ -1,5 +1,7 @@
 import { isValid, resetValidation } from './validate.js';
 import { isEscape } from './utilits.js';
+import './scalePicture.js';
+import './filter.js';
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
