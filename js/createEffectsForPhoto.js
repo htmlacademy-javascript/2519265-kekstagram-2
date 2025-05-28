@@ -4,10 +4,10 @@ const sliderFilter = document.querySelector('.effect-level__slider');
 const filterValue = document.querySelector('.effect-level__value');
 const img = document.querySelector('.img-upload__preview');
 const effectList = document.querySelector('.effects__list');
-const filterEffectInputs = document.querySelectorAll('.effects__radio');
 const CLASS__OF__FILTERS = 'effects__preview--';
 const slideContainer = document.querySelector('.img-upload__effect-level');
 const filterEffects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
+let checkedEffect;
 
 const showSlider = (isShown = true) => {
   if (isShown) {
@@ -32,6 +32,7 @@ effectList.onclick = function (evt) {
   }
 };
 
+
 noUiSlider.create(sliderFilter, {
   range: {
     min: 0,
@@ -40,7 +41,6 @@ noUiSlider.create(sliderFilter, {
   start: 1,
   step: 1,
   connect: 'lower',
-  tooltips: true,
   format: {
     to: function (value) {
       if (Number.isInteger(value)) {
@@ -56,45 +56,21 @@ noUiSlider.create(sliderFilter, {
 
 sliderFilter.noUiSlider.on('update', () => {
   filterValue.value = sliderFilter.noUiSlider.get();
-  for (const filterEffectInput of filterEffectInputs) {
-    if (filterEffectInput.checked) {
-      switch (filterEffectInput.value) {
-        case filterEffects[1]:
-          img.style.filter = `grayscale(${filterValue.value})`;
-          break;
 
-        case filterEffects[2]:
-          img.style.filter = `sepia(${filterValue.value})`;
-          break;
-
-        case filterEffects[3]:
-          img.style.filter = `invert(${filterValue.value}%)`;
-          break;
-
-        case filterEffects[4]:
-          img.style.filter = `blur(${filterValue.value}px)`;
-          break;
-
-        case filterEffects[5]:
-          img.style.filter = `brightness(${filterValue.value})`;
-          break;
-      }
-    }
+  if (checkedEffect !== undefined) {
+    img.style.filter = `${checkedEffect.style}(${filterValue.value} ${checkedEffect.units})`;
   }
-
 });
 
 effectList.addEventListener('change', (evt) => {
-  for (const effect of FilterEffectSaturation) {
-    if (evt.target.value === effect.effect) {
-      sliderFilter.noUiSlider.updateOptions(effect.settings);
-    }
-  }
-  if (evt.target.value === 'none') {
+  checkedEffect = FilterEffectSaturation.find((item) => item.effect === evt.target.value);
+  if (checkedEffect !== undefined) {
+    sliderFilter.noUiSlider.updateOptions(checkedEffect.settings);
+    showSlider();
+  } else {
     showSlider(false);
     img.style.filter = '';
-  } else {
-    showSlider();
   }
+  return checkedEffect;
 });
 

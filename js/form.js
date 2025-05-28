@@ -1,7 +1,7 @@
 import { isValid, resetValidation } from './validate.js';
 import { isEscape } from './utilits.js';
-import './scalePicture.js';
-import './filter.js';
+import { reset as resetScale } from './scalePicture.js';
+import './createEffectsForPhoto.js';
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
@@ -12,47 +12,48 @@ const description = form.querySelector('.text__description');
 const hashtagsElem = form.querySelector('.text__hashtags');
 
 const shownModal = (isShown = true) => {
-  if (isShown) {
-    modal.classList.remove('hidden');
-    body.classList.add('modal-open');
-  } else {
-    modal.classList.add('hidden');
-    body.classList.remove('modal-open');
-  }
+	if (isShown) {
+		modal.classList.remove('hidden');
+		body.classList.add('modal-open');
+	} else {
+		modal.classList.add('hidden');
+		body.classList.remove('modal-open');
+	}
 };
 
 const closeModal = () => {
-  shownModal(false);
-  form.reset();
-  resetValidation();
+	shownModal(false);
+	form.reset();
+	resetValidation();
+	resetScale();
 };
 
 const onEscapePress = (evt) => {
-  if ((document.activeElement === description) || (document.activeElement === hashtagsElem)) {
-    return evt;
-  }
-  if (isEscape(evt)) {
-    closeModal();
-    document.removeEventListener('keydown', onEscapePress);
-  }
+	if ((document.activeElement === description) || (document.activeElement === hashtagsElem)) {
+		return evt;
+	}
+	if (isEscape(evt)) {
+		closeModal();
+		document.removeEventListener('keydown', onEscapePress);
+	}
 };
 
 const openModal = () => {
-  shownModal();
-  document.addEventListener('keydown', (evt) => onEscapePress(evt));
+	shownModal();
+	document.addEventListener('keydown', (evt) => onEscapePress(evt));
 };
 
 uploadFile.addEventListener('change', () => {
-  openModal();
+	openModal();
 });
 
 closeModalButton.addEventListener('click', () => {
-  closeModal();
+	closeModal();
 });
 
 form.addEventListener('submit', (evt) => {
-  if (!isValid()) {
-    evt.preventDefault();
-  }
+	if (!isValid()) {
+		evt.preventDefault();
+	}
 });
 
