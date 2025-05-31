@@ -1,5 +1,7 @@
 import { isValid, resetValidation } from './validate.js';
 import { isEscape } from './utilits.js';
+import { reset as resetScale } from './scalePicture.js';
+import './createEffectsForPhoto.js';
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
@@ -23,6 +25,7 @@ const closeModal = () => {
   shownModal(false);
   form.reset();
   resetValidation();
+  resetScale();
 };
 
 const onEscapePress = (evt) => {

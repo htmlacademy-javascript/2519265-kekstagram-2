@@ -1,6 +1,7 @@
 import { isEscape } from './utilits.js';
 import { initComments } from './createComments.js';
 
+
 const body = document.body;
 const containerForBigPhoto = document.querySelector('.big-picture');
 

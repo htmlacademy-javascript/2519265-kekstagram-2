@@ -1,5 +1,5 @@
-import {NAMES, DESCRIPTIONS, USER_COUNT, PHOTO_COUNT, MIN_AVATAR, MAX_AVATAR, MIN_LIKES, MAX_LIKES, MESSAGES} from './constants.js';
-import { getRandomInteger, getSetRandomInteger, makeCounter} from './utilits.js';
+import { NAMES, DESCRIPTIONS, USER_COUNT, PHOTO_COUNT, MIN_AVATAR, MAX_AVATAR, MIN_LIKES, MAX_LIKES, MESSAGES } from './constants.js';
+import { getRandomInteger, getSetRandomInteger, makeCounter } from './utilits.js';
 
 const getRandonArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
@@ -27,7 +27,8 @@ const getPhoto = () => ({
   url: `photos/${numberPhoto.arrRandom[numberPhotoCounter()]}.jpg`,
   description: getRandonArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
-  comments: Array.from({length: getRandomInteger(13, 30)}, createComment),
+  comments: Array.from({ length: getRandomInteger(13, 30) }, createComment),
 });
 
-export const photos = Array.from({length: PHOTO_COUNT}, getPhoto);
+
+export const photos = Array.from({ length: PHOTO_COUNT }, getPhoto);
