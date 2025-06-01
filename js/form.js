@@ -1,6 +1,8 @@
 import { isValid, resetValidation } from './validate.js';
 import { isEscape } from './utilits.js';
+import { showAlert } from './alert.js';
 import { reset as resetScale } from './scalePicture.js';
+import { sendData } from './api.js';
 import './createEffectsForPhoto.js';
 
 const body = document.body;
@@ -10,6 +12,12 @@ const uploadFile = form.querySelector('#upload-file');
 const closeModalButton = form.querySelector('.img-upload__cancel');
 const description = form.querySelector('.text__description');
 const hashtagsElem = form.querySelector('.text__hashtags');
+const submitButton = form.querySelector('#upload-submit');
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Сохраняю...'
+};
 
 const shownModal = (isShown = true) => {
   if (isShown) {
@@ -20,12 +28,22 @@ const shownModal = (isShown = true) => {
     body.classList.remove('modal-open');
   }
 };
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
 
-const closeModal = () => {
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+export const closeModal = () => {
   shownModal(false);
   form.reset();
   resetValidation();
   resetScale();
+  showAlert();
 };
 
 const onEscapePress = (evt) => {
@@ -40,7 +58,11 @@ const onEscapePress = (evt) => {
 
 const openModal = () => {
   shownModal();
-  document.addEventListener('keydown', (evt) => onEscapePress(evt));
+
+  // поменять, когда получиться удалить
+  document.addEventListener('keydown', (evt) => {
+    onEscapePress(evt);
+  }, { once: true });
 };
 
 uploadFile.addEventListener('change', () => {
@@ -51,9 +73,23 @@ closeModalButton.addEventListener('click', () => {
   closeModal();
 });
 
-form.addEventListener('submit', (evt) => {
-  if (!isValid()) {
+export const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-  }
-});
+
+    if (isValid()) {
+      //   console.log(onSuccess)
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch(() => {
+          showAlert(false);
+        })
+        .finally(unblockSubmitButton);
+      // );
+    }
+  });
+};
+
+export const closeModalSubmit = () => setUserFormSubmit(closeModal);
 
