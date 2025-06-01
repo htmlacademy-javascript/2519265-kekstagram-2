@@ -2,51 +2,52 @@ import { isEscape } from './utilits.js';
 
 const templateError = document.querySelector('#error').content;
 const templateSuccess = document.querySelector('#success').content;
+const templateDownloadError = document.querySelector('#data-error').content;
 const body = document.body;
 
-export const closeAlert = (modal) => {
-  modal.remove();
-};
-
-export const onEscapePress = (evt) => {
-  if (isEscape(evt)) {
-    const modal = document.querySelector('.success') || document.querySelector('.error');
-    // console.log(modal);
-    modal.remove();
-  }
-};
-
 export const showAlert = (isSuccess = true) => {
-  let modal;
-  let Button;
-
   if (isSuccess) {
     const Modal = templateSuccess.cloneNode(true);
     body.append(Modal);
-    modal = document.querySelector('.success');
-    Button = modal.querySelector('.success__button');
+    const modal = document.querySelector('.success');
+    const button = modal.querySelector('.success__button');
+
+    const checkSpaceAndDelete = (evt) => {
+      if (evt.target.parentNode !== modal) {
+        modal.remove();
+      }
+    };
+
+    button.addEventListener('click', () => {
+      modal.remove();;
+    });
+
+    document.addEventListener('click', (evt) => {
+      checkSpaceAndDelete(evt);
+    }, { once: true });
+
+    document.addEventListener('keydown', (evt) => {
+      if (isEscape(evt)) {
+        modal.remove();
+      }
+    }, { once: true });
   } else {
-    const Modal = templateError.cloneNode(true);
-    body.append(Modal);
-    modal = document.querySelector('.error');
-    Button = modal.querySelector('.error__button');
+    showAlertDownloadError();
   }
 
-  Button.addEventListener('click', () => {
-    closeAlert(modal);
-  });
 
-  const checkSpaceAndDelete = (evt) => {
-    if (evt.target.parentNode !== modal) {
-      modal.remove();
-    }
-  };
 
-  document.addEventListener('click', (evt) => {
-    checkSpaceAndDelete(evt);
-  }, { once: true });
+};
 
-  document.addEventListener('keydown', (evt) => {
-    onEscapePress(evt);
-  }, { once: true });
+const downloadError = (err) => {
+  const downloadErrorContainer = templateDownloadError.cloneNode(true);
+  console.log(err)
+  body.append(downloadErrorContainer);
+}
+
+export const showAlertDownloadError = (err) => {
+  downloadError(err);
+  setTimeout(() => {
+    document.querySelector('.data-error').remove();
+  }, 5000)
 };
