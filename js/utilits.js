@@ -1,5 +1,4 @@
 // Создает случайное число
-
 export const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -18,14 +17,14 @@ export const getSetRandomInteger = (a, b, count) => {
     }
   }
 
-  if((((a - b) + 1) >= count) || (((b - a) + 1) >= count)) {
+  if ((((a - b) + 1) >= count) || (((b - a) + 1) >= count)) {
     while (arrRandom.length < count) {
       getArrElem(getRandomInteger(a, b));
     }
   } else {
     return 'Колличество необходимых целых чисел для создания больше возможных в данном промежутке';
   }
-  return {arrRandom};
+  return { arrRandom };
 };
 
 // //Счетчик
@@ -33,8 +32,8 @@ export const getSetRandomInteger = (a, b, count) => {
 export function makeCounter(maxCount) {
   let currentCount = 0;
 
-  return function() {
-    if(currentCount > (maxCount - 1)) {
+  return function () {
+    if (currentCount > (maxCount - 1)) {
       currentCount = 0;
     }
     return currentCount++;
