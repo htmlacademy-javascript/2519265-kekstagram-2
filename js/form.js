@@ -4,6 +4,7 @@ import { showAlert } from './alert.js';
 import { reset as resetScale } from './scalePicture.js';
 import { sendData } from './api.js';
 import './createEffectsForPhoto.js';
+import { removeClasses } from './createEffectsForPhoto.js';
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
@@ -15,79 +16,83 @@ const hashtagsElem = form.querySelector('.text__hashtags');
 const submitButton = form.querySelector('#upload-submit');
 
 const SubmitButtonText = {
-	IDLE: 'Опубликовать',
-	SENDING: 'Сохраняю...'
+  IDLE: 'Опубликовать',
+  SENDING: 'Сохраняю...'
 };
 
 const shownModal = (isShown = true) => {
-	if (isShown) {
-		modal.classList.remove('hidden');
-		body.classList.add('modal-open');
-	} else {
-		modal.classList.add('hidden');
-		body.classList.remove('modal-open');
-	}
+  if (isShown) {
+    modal.classList.remove('hidden');
+    body.classList.add('modal-open');
+  } else {
+    modal.classList.add('hidden');
+    body.classList.remove('modal-open');
+  }
 };
 const blockSubmitButton = () => {
-	submitButton.disabled = true;
-	submitButton.textContent = SubmitButtonText.SENDING;
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
 };
 
 const unblockSubmitButton = () => {
-	submitButton.disabled = false;
-	submitButton.textContent = SubmitButtonText.IDLE;
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
 };
 
 export const closeModal = () => {
-	shownModal(false);
-	form.reset();
-	resetValidation();
-	resetScale();
-	showAlert();
+  shownModal(false);
+  form.reset();
+  resetValidation();
+  resetScale();
+  removeClasses();
+  // showAlert();
 };
 
 const onEscapePress = (evt) => {
-	if ((document.activeElement === description) || (document.activeElement === hashtagsElem)) {
-		return evt;
-	}
-	if (isEscape(evt)) {
-		closeModal();
-		document.removeEventListener('keydown', onEscapePress);
-	}
+  if ((document.activeElement === description) || (document.activeElement === hashtagsElem)) {
+    return evt;
+  }
+  if (isEscape(evt)) {
+    closeModal();
+    document.removeEventListener('keydown', onEscapePress);
+  }
 };
 
 const openModal = () => {
-	shownModal();
-	document.addEventListener('keydown', (evt) => {
-		onEscapePress(evt);
-	}, { once: true });
+  shownModal();
+  document.addEventListener('keydown', (evt) => {
+    onEscapePress(evt);
+  }, { once: true });
 };
 
 uploadFile.addEventListener('change', () => {
-	openModal();
+  openModal();
 });
 
 closeModalButton.addEventListener('click', () => {
-	closeModal();
+  closeModal();
 });
 
-export const setUserFormSubmit = (onSuccess) => {
-	form.addEventListener('submit', (evt) => {
-		evt.preventDefault();
+export const setUserFormSubmit = () => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-		if (isValid()) {
-			//   console.log(onSuccess)
-			blockSubmitButton();
-			sendData(new FormData(evt.target))
-				.then(onSuccess)
-				.catch(() => {
-					showAlert(false);
-				})
-				.finally(unblockSubmitButton);
-			// );
-		}
-	});
+    if (isValid()) {
+      //   console.log(onSuccess)
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          closeModal();
+          showAlert();
+        })
+        .catch(() => {
+          showAlert(false);
+        })
+        .finally(unblockSubmitButton);
+      // );
+    }
+  });
 };
 
-export const closeModalSubmit = () => setUserFormSubmit(closeModal);
+// export const closeModalSubmit = () => setUserFormSubmit(coseModall);
 

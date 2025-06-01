@@ -9,6 +9,14 @@ const slideContainer = document.querySelector('.img-upload__effect-level');
 const filterEffects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 let checkedEffect;
 
+
+export const removeClasses = () => {
+  for (const filter of filterEffects) {
+    img.classList.remove(CLASS__OF__FILTERS + filter);
+    img.style.filter = '';
+  }
+};
+
 const showSlider = (isShown = true) => {
   if (isShown) {
     slideContainer.classList.remove('hidden');
@@ -17,20 +25,15 @@ const showSlider = (isShown = true) => {
   }
 };
 
-const removeClasses = () => {
-  for (const filter of filterEffects) {
-    img.classList.remove(CLASS__OF__FILTERS + filter);
-  }
-};
 
 showSlider(false);
 
-effectList.onclick = function (evt) {
+effectList.addEventListener('click', (evt) => {
   if (evt.target.value) {
     removeClasses();
     img.classList.add(CLASS__OF__FILTERS + evt.target.value);
   }
-};
+});
 
 
 noUiSlider.create(sliderFilter, {

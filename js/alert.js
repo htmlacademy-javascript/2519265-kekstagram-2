@@ -1,9 +1,21 @@
 import { isEscape } from './utilits.js';
 
-const templateError = document.querySelector('#error').content;
 const templateSuccess = document.querySelector('#success').content;
 const templateDownloadError = document.querySelector('#data-error').content;
 const body = document.body;
+
+const downloadError = () => {
+  const downloadErrorContainer = templateDownloadError.cloneNode(true);
+  // console.log(err)
+  body.append(downloadErrorContainer);
+};
+
+export const showAlertDownloadError = (err) => {
+  downloadError(err);
+  setTimeout(() => {
+    document.querySelector('.data-error').remove();
+  }, 5000);
+};
 
 export const showAlert = (isSuccess = true) => {
   if (isSuccess) {
@@ -19,7 +31,7 @@ export const showAlert = (isSuccess = true) => {
     };
 
     button.addEventListener('click', () => {
-      modal.remove();;
+      modal.remove();
     });
 
     document.addEventListener('click', (evt) => {
@@ -34,20 +46,6 @@ export const showAlert = (isSuccess = true) => {
   } else {
     showAlertDownloadError();
   }
-
-
-
 };
 
-const downloadError = (err) => {
-  const downloadErrorContainer = templateDownloadError.cloneNode(true);
-  console.log(err)
-  body.append(downloadErrorContainer);
-}
 
-export const showAlertDownloadError = (err) => {
-  downloadError(err);
-  setTimeout(() => {
-    document.querySelector('.data-error').remove();
-  }, 5000)
-};
