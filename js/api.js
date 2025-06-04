@@ -19,6 +19,7 @@ export const load = (route, errorText, method = Method.GET, body = null) =>
       if (!response.ok) {
         throw new Error();
       } else {
+        document.querySelector('.img-filters').classList.remove('img-filters--inactive');
         return response.json();
       }
     })

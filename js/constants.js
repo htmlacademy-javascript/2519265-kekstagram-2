@@ -9,6 +9,7 @@ export const STEP_SCALE = 25;
 export const MAX_SCALE = 100;
 export const MIN_SCALE = 25;
 export const SCALE_FACTOR = 0.01;
+export const RANDOM_PHOTO_COUNT = 10;
 
 export const NAMES = [
   'Никита',

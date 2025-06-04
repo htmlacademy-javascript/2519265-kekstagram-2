@@ -1,0 +1,49 @@
+import { RANDOM_PHOTO_COUNT } from './constants.js';
+import { getSetRandomInteger } from './utilits.js';
+import { renderCards } from './createPictures.js';
+
+const filterContainer = document.querySelector('.img-filters__form');
+const filterButtons = {
+  default: 'filter-default',
+  random: 'filter-random',
+  discussed: 'filter-discussed',
+};
+
+const activeButtonClass = 'img-filters__button--active';
+
+const randomPhotoArr = (arr) => {
+  const randomCountPhoto = getSetRandomInteger(0, (arr.length - 1), (RANDOM_PHOTO_COUNT));
+  // console.log(randomCountPhoto)
+  const arrCopy = [];
+  randomCountPhoto.arrRandom.forEach((element) => {
+    arrCopy.push(arr[element]);
+  });
+  return arrCopy;
+};
+
+const resetActiveClass = (container) => {
+  const activeElement = container.querySelector('.img-filters__button--active');
+  activeElement.classList.remove(activeButtonClass);
+};
+
+export const getFilterArray = (arr) => {
+  let localArr = [...arr];
+  const containerForPhoto = document.querySelector('.pictures');
+  filterContainer.addEventListener('click', (evt) => {
+
+    resetActiveClass(filterContainer);
+    evt.target.classList.add(activeButtonClass);
+
+    localArr = [...arr];
+    containerForPhoto.textContent = '';
+    if (evt.target.id === filterButtons.random) {
+      localArr = randomPhotoArr(localArr);
+    } else if (evt.target.id === filterButtons.discussed) {
+      localArr = localArr.sort((a, b) => b.comments.length - a.comments.length);
+    } else {
+      localArr = [...arr];
+    }
+    renderCards(localArr);
+    // cb(localArr);
+  });
+};

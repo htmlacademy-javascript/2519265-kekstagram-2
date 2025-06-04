@@ -1,4 +1,5 @@
 import { createBigPicture } from './createBigPicture.js';
+// import { getFilterArray } from './filters.js';
 
 const containerForPhoto = document.querySelector('.pictures');
 const photoElementTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -9,7 +10,7 @@ export const renderCards = (elements) => {
   localPhotos = [...elements];
   const similarListFragment = document.createDocumentFragment();
 
-  elements.forEach(({id, url, description, comments, likes}) => {
+  localPhotos.forEach(({ id, url, description, comments, likes }) => {
     const photoElement = photoElementTemplate.cloneNode(true);
     const img = photoElement.querySelector('.picture__img');
     photoElement.dataset.id = id;
@@ -22,9 +23,9 @@ export const renderCards = (elements) => {
   containerForPhoto.appendChild(similarListFragment);
 };
 
-containerForPhoto.addEventListener('click', ({target}) => {
+containerForPhoto.addEventListener('click', ({ target }) => {
   const card = target.closest('.picture');
-  if(card) {
+  if (card) {
     const idTarget = card.dataset.id;
     const currentPhoto = localPhotos.find((photo) => photo.id === +idTarget);
     body.classList.add('modal-open');
