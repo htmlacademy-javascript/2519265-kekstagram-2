@@ -16,7 +16,6 @@ const debouncedRenderCards = debounce(renderCards);
 
 const randomPhotoArr = (arr) => {
   const randomCountPhoto = getSetRandomInteger(0, (arr.length - 1), (RANDOM_PHOTO_COUNT));
-  // console.log(randomCountPhoto)
   const arrCopy = [];
   randomCountPhoto.arrRandom.forEach((element) => {
     arrCopy.push(arr[element]);
@@ -31,7 +30,6 @@ const resetActiveClass = (container) => {
 
 export const getFilterArray = (arr) => {
   let localArr = [...arr];
-  // const containerForPhoto = document.querySelector('.pictures');
   filterContainer.addEventListener('click', (evt) => {
 
     resetActiveClass(filterContainer);
@@ -46,6 +44,5 @@ export const getFilterArray = (arr) => {
       localArr = [...arr];
     }
     debouncedRenderCards(localArr);
-    // cb(localArr);
   });
 };

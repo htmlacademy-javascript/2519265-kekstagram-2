@@ -10,13 +10,6 @@ const filterEffects = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 let checkedEffect;
 
 
-export const removeClasses = () => {
-  for (const filter of filterEffects) {
-    img.classList.remove(CLASS__OF__FILTERS + filter);
-    img.style.filter = '';
-  }
-};
-
 const showSlider = (isShown = true) => {
   if (isShown) {
     slideContainer.classList.remove('hidden');
@@ -25,6 +18,13 @@ const showSlider = (isShown = true) => {
   }
 };
 
+export const removeClasses = () => {
+  for (const filter of filterEffects) {
+    img.classList.remove(CLASS__OF__FILTERS + filter);
+    img.style.filter = '';
+    showSlider(false);
+  }
+};
 
 showSlider(false);
 
@@ -61,7 +61,7 @@ sliderFilter.noUiSlider.on('update', () => {
   filterValue.value = sliderFilter.noUiSlider.get();
 
   if (checkedEffect !== undefined) {
-    img.style.filter = `${checkedEffect.style}(${filterValue.value} ${checkedEffect.units})`;
+    img.style.filter = `${checkedEffect.style}(${filterValue.value}${checkedEffect.units})`;
   }
 });
 

@@ -6,7 +6,6 @@ const body = document.body;
 
 const downloadError = () => {
   const downloadErrorContainer = templateDownloadError.cloneNode(true);
-  // console.log(err)
   body.append(downloadErrorContainer);
 };
 

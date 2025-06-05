@@ -27,7 +27,7 @@ export const getSetRandomInteger = (a, b, count) => {
   return { arrRandom };
 };
 
-// //Счетчик
+//Счетчик
 
 export function makeCounter(maxCount) {
   let currentCount = 0;

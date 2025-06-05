@@ -5,7 +5,6 @@ function checkStringLength(string, count) {
 }
 
 checkStringLength('проверяемая строка', 5);
-// console.log(checkStringLength('проверяемая строка', 5));
 
 // Палиндром
 
@@ -14,7 +13,7 @@ function isPalindrome(string) {
   const stringLowerCase = spacelessStr.toLowerCase();
   let stringBackward = '';
 
-  for(let i = 0; i < stringLowerCase.length; i++) {
+  for (let i = 0; i < stringLowerCase.length; i++) {
     stringBackward = stringLowerCase[i] + stringBackward;
   }
   return stringBackward === stringLowerCase;
@@ -32,7 +31,7 @@ function getNumber(string) {
   let stringCopy = string.toString();
   stringCopy = stringCopy.replaceAll(' ', '');
   let result = '';
-  for(let i = 0; i < stringCopy.length; i++) {
+  for (let i = 0; i < stringCopy.length; i++) {
     if (!isNaN(stringCopy[i])) {
       result = result + stringCopy[i];
     }
