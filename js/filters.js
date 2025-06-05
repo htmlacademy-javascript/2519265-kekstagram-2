@@ -1,6 +1,7 @@
 import { RANDOM_PHOTO_COUNT } from './constants.js';
 import { getSetRandomInteger } from './utilits.js';
 import { renderCards } from './createPictures.js';
+import { debounce } from './utilits.js';
 
 const filterContainer = document.querySelector('.img-filters__form');
 const filterButtons = {
@@ -10,6 +11,8 @@ const filterButtons = {
 };
 
 const activeButtonClass = 'img-filters__button--active';
+
+const debouncedRenderCards = debounce(renderCards);
 
 const randomPhotoArr = (arr) => {
   const randomCountPhoto = getSetRandomInteger(0, (arr.length - 1), (RANDOM_PHOTO_COUNT));
@@ -28,14 +31,13 @@ const resetActiveClass = (container) => {
 
 export const getFilterArray = (arr) => {
   let localArr = [...arr];
-  const containerForPhoto = document.querySelector('.pictures');
+  // const containerForPhoto = document.querySelector('.pictures');
   filterContainer.addEventListener('click', (evt) => {
 
     resetActiveClass(filterContainer);
     evt.target.classList.add(activeButtonClass);
 
     localArr = [...arr];
-    containerForPhoto.textContent = '';
     if (evt.target.id === filterButtons.random) {
       localArr = randomPhotoArr(localArr);
     } else if (evt.target.id === filterButtons.discussed) {
@@ -43,7 +45,7 @@ export const getFilterArray = (arr) => {
     } else {
       localArr = [...arr];
     }
-    renderCards(localArr);
+    debouncedRenderCards(localArr);
     // cb(localArr);
   });
 };

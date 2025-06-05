@@ -6,7 +6,15 @@ const photoElementTemplate = document.querySelector('#picture').content.querySel
 const body = document.body;
 let localPhotos;
 
+const clear = () => {
+  document.querySelectorAll('.picture').forEach((card) => {
+    card.remove();
+  })
+}
+
+
 export const renderCards = (elements) => {
+  clear();
   localPhotos = [...elements];
   const similarListFragment = document.createDocumentFragment();
 
