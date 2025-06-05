@@ -9,8 +9,8 @@ let localPhotos;
 const clear = () => {
   document.querySelectorAll('.picture').forEach((card) => {
     card.remove();
-  })
-}
+  });
+};
 
 
 export const renderCards = (elements) => {
