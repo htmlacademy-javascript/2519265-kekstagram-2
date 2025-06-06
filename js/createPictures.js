@@ -1,5 +1,4 @@
 import { createBigPicture } from './createBigPicture.js';
-// import { getFilterArray } from './filters.js';
 
 const containerForPhoto = document.querySelector('.pictures');
 const photoElementTemplate = document.querySelector('#picture').content.querySelector('.picture');

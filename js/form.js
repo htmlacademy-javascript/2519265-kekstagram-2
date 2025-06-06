@@ -5,6 +5,7 @@ import { reset as resetScale } from './scalePicture.js';
 import { sendData } from './api.js';
 import './createEffectsForPhoto.js';
 import { removeClasses } from './createEffectsForPhoto.js';
+import './uploadPhoto.js';
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
@@ -45,7 +46,6 @@ export const closeModal = () => {
   resetValidation();
   resetScale();
   removeClasses();
-  // showAlert();
 };
 
 const onEscapePress = (evt) => {
@@ -78,7 +78,6 @@ export const setUserFormSubmit = () => {
     evt.preventDefault();
 
     if (isValid()) {
-      //   console.log(onSuccess)
       blockSubmitButton();
       sendData(new FormData(evt.target))
         .then(() => {
@@ -89,10 +88,6 @@ export const setUserFormSubmit = () => {
           showAlert(false);
         })
         .finally(unblockSubmitButton);
-      // );
     }
   });
 };
-
-// export const closeModalSubmit = () => setUserFormSubmit(coseModall);
-

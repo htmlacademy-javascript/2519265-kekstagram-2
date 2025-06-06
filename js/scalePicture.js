@@ -5,7 +5,6 @@ const scaleSmaller = scale.querySelector('.scale__control--smaller');
 const scaleBigger = scale.querySelector('.scale__control--bigger');
 const scaleValueElement = scale.querySelector('.scale__control--value');
 const img = document.querySelector('.img-upload__preview img');
-//let transformValue = scaleValueElement.value.slice(0, -1);
 
 let currentScale = MAX_SCALE;
 

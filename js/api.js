@@ -26,7 +26,6 @@ export const load = (route, errorText, method = Method.GET, body = null) =>
     .catch((err) => {
       throw new Error(err.errorText);
     });
-// });
 
 export const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA);
 
