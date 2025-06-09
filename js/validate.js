@@ -1,5 +1,5 @@
-const MAX__DESCRIPTION = 5;
-const HASHTAG__FORMULA = /^#[a-zA-Z0-9]{1,19}$/;
+const MAX__DESCRIPTION = 140;
+const HASHTAG__FORMULA = /^#[a-zA-Zа-яА-яЁё0-9]{1,19}$/;
 const HASHTAGS__COUNT = 5;
 const MAX__LENGTH__HASHTAG = 20;
 

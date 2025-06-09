@@ -11,7 +11,6 @@ const clear = () => {
   });
 };
 
-
 export const renderCards = (elements) => {
   clear();
   localPhotos = [...elements];
