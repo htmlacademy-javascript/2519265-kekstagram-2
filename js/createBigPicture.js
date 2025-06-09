@@ -10,7 +10,6 @@ const buttonCloseModal = containerForBigPhoto.querySelector('.big-picture__cance
 const onEscapePress = (evt) => {
   if (isEscape(evt)) {
     closeUserModal();
-    document.removeEventListener('keydown', onEscapePress);
   }
 };
 
@@ -23,7 +22,6 @@ function closeUserModal() {
   containerForBigPhoto.classList.add('hidden');
   body.classList.remove('modal-open');
 }
-
 
 export const createBigPicture = ({ url, likes, comments, description }) => {
 

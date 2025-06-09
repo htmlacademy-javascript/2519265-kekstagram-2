@@ -30,14 +30,9 @@ const shownModal = (isShown = true) => {
     body.classList.remove('modal-open');
   }
 };
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
+const blockSubmitButton = (isBlocked = true) => {
+  submitButton.disabled = isBlocked;
+  submitButton.textContent = isBlocked ? SubmitButtonText.SENDING : SubmitButtonText.IDLE;
 };
 
 export const closeModal = () => {
@@ -49,10 +44,10 @@ export const closeModal = () => {
 };
 
 const onEscapePress = (evt) => {
-  if ((document.activeElement === description) || (document.activeElement === hashtagsElem)) {
-    return evt;
-  }
   if (isEscape(evt)) {
+    if ((document.activeElement === description) || (document.activeElement === hashtagsElem) || document.querySelector('.error')) {
+      return;
+    }
     closeModal();
     document.removeEventListener('keydown', onEscapePress);
   }
@@ -60,17 +55,17 @@ const onEscapePress = (evt) => {
 
 const openModal = () => {
   shownModal();
-  document.addEventListener('keydown', (evt) => {
-    onEscapePress(evt);
-  }, { once: true });
+  document.addEventListener('keydown', onEscapePress);
 };
 
 uploadFile.addEventListener('change', () => {
   openModal();
 });
 
-closeModalButton.addEventListener('click', () => {
+closeModalButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
   closeModal();
+  document.removeEventListener('keydown', onEscapePress);
 });
 
 export const setUserFormSubmit = () => {
@@ -83,11 +78,14 @@ export const setUserFormSubmit = () => {
         .then(() => {
           closeModal();
           showAlert();
+          document.removeEventListener('keydown', onEscapePress);
         })
         .catch(() => {
           showAlert(false);
         })
-        .finally(unblockSubmitButton);
+        .finally(() => {
+          blockSubmitButton(false);
+        });
     }
   });
 };
