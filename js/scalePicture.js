@@ -40,3 +40,4 @@ export const reset = () => {
   render();
 };
 
+reset();

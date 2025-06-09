@@ -1,8 +1,14 @@
 import { isEscape } from './utilits.js';
 
-const templateSuccess = document.querySelector('#success').content;
+const templateSuccess = document.querySelector('#success').content.querySelector('.success');
 const templateDownloadError = document.querySelector('#data-error').content;
+const templateError = document.querySelector('#error').content.querySelector('.error');
 const body = document.body;
+
+const templates = {
+  success: templateSuccess,
+  error: templateError
+};
 
 const downloadError = () => {
   const downloadErrorContainer = templateDownloadError.cloneNode(true);
@@ -17,34 +23,36 @@ export const showAlertDownloadError = (err) => {
 };
 
 export const showAlert = (isSuccess = true) => {
-  if (isSuccess) {
-    const Modal = templateSuccess.cloneNode(true);
-    body.append(Modal);
-    const modal = document.querySelector('.success');
-    const button = modal.querySelector('.success__button');
+  const current = isSuccess ? 'success' : 'error';
 
-    const checkSpaceAndDelete = (evt) => {
-      if (evt.target.parentNode !== modal) {
-        modal.remove();
-      }
-    };
+  const modal = templates[current].cloneNode(true);
+  const button = modal.querySelector(`.${current}__button`);
+  body.append(modal);
 
-    button.addEventListener('click', () => {
+  const checkSpaceAndDelete = (evt) => {
+    if (evt.target.parentNode !== modal) {
       modal.remove();
-    });
+      document.removeEventListener('keydown', onDocumentKeydown);
+    }
+  };
 
-    document.addEventListener('click', (evt) => {
-      checkSpaceAndDelete(evt);
-    }, { once: true });
+  button.addEventListener('click', () => {
+    modal.remove();
+    document.removeEventListener('keydown', onDocumentKeydown);
+  });
 
-    document.addEventListener('keydown', (evt) => {
-      if (isEscape(evt)) {
-        modal.remove();
-      }
-    }, { once: true });
-  } else {
-    showAlertDownloadError();
+  document.addEventListener('click', (evt) => {
+    checkSpaceAndDelete(evt);
+  }, { once: true });
+
+  function onDocumentKeydown(evt) {
+    if (isEscape(evt)) {
+      modal.remove();
+    }
+    document.removeEventListener('keydown', onDocumentKeydown);
   }
+
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 

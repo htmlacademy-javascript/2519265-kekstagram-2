@@ -2,7 +2,7 @@ import { FilterEffectSaturation } from './constants.js';
 
 const sliderFilter = document.querySelector('.effect-level__slider');
 const filterValue = document.querySelector('.effect-level__value');
-const img = document.querySelector('.img-upload__preview');
+const img = document.querySelector('.img-upload__preview img');
 const effectList = document.querySelector('.effects__list');
 const CLASS__OF__FILTERS = 'effects__preview--';
 const slideContainer = document.querySelector('.img-upload__effect-level');
