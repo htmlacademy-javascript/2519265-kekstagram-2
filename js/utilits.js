@@ -9,36 +9,25 @@ export const getRandomInteger = (a, b) => {
 //Массив случайных неповторяемых чисел
 
 export const getSetRandomInteger = (a, b, count) => {
-  const arrRandom = [];
+  const arrayOfRandomNumbers = [];
 
   function getArrElem(number) {
-    if (!arrRandom.includes(number)) {
-      arrRandom.push(number);
+    if (!arrayOfRandomNumbers.includes(number)) {
+      arrayOfRandomNumbers.push(number);
     }
   }
 
   if ((((a - b) + 1) >= count) || (((b - a) + 1) >= count)) {
-    while (arrRandom.length < count) {
+    while (arrayOfRandomNumbers.length < count) {
       getArrElem(getRandomInteger(a, b));
     }
   } else {
     return 'Колличество необходимых целых чисел для создания больше возможных в данном промежутке';
   }
-  return { arrRandom };
+  return { arrayOfRandomNumbers };
 };
 
 //Счетчик
-
-export function makeCounter(maxCount) {
-  let currentCount = 0;
-
-  return function () {
-    if (currentCount > (maxCount - 1)) {
-      currentCount = 0;
-    }
-    return currentCount++;
-  };
-}
 
 export const isEscape = (evt) => evt.key === 'Escape';
 
