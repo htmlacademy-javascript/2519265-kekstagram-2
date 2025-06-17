@@ -1,4 +1,4 @@
-import {COMMENTS__STEP} from './constants.js';
+import { COMMENTS_STEP } from './constants.js';
 
 const commentTemplate = document.querySelector('.social__comment');
 const commentsContainer = document.querySelector('.social__comments');
@@ -9,7 +9,7 @@ const buttonMoreComments = document.querySelector('.social__comments-loader');
 let localComments;
 let renderedComments = 0;
 
-const renderComment = ({message, avatar, name}) => {
+const renderComment = ({ message, avatar, name }) => {
   const comment = commentTemplate.cloneNode(true);
   const userpic = comment.querySelector('.social__picture');
 
@@ -25,7 +25,7 @@ const renderStatistic = () => {
 };
 
 const renderLoaderButton = () => {
-  if(localComments.length) {
+  if (localComments.length) {
     buttonMoreComments.classList.remove('hidden');
   } else {
     buttonMoreComments.classList.add('hidden');
@@ -34,7 +34,7 @@ const renderLoaderButton = () => {
 
 const renderComments = () => {
   const fragment = document.createDocumentFragment();
-  localComments.splice(0, COMMENTS__STEP).forEach((item) => {
+  localComments.splice(0, COMMENTS_STEP).forEach((item) => {
     fragment.append(renderComment(item));
     renderedComments++;
   });
@@ -51,4 +51,8 @@ export const initComments = (comments) => {
   renderComments();
 };
 
-buttonMoreComments.addEventListener('click', renderComments);
+const onMoreButtonClick = () => {
+  renderComments();
+};
+
+buttonMoreComments.addEventListener('click', onMoreButtonClick);
