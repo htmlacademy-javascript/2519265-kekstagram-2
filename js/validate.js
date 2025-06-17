@@ -1,7 +1,7 @@
-const MAX__DESCRIPTION = 140;
-const HASHTAG__FORMULA = /^#[a-zA-Zа-яА-яЁё0-9]{1,19}$/;
-const HASHTAGS__COUNT = 5;
-const MAX__LENGTH__HASHTAG = 20;
+const MAX_DESCRIPTION = 140;
+const HASHTAG_FORMULA = /^#[a-zA-Zа-яА-яЁё0-9]{1,19}$/;
+const HASHTAGS_COUNT = 5;
+const MAX_LENGTH_HASHTAG = 20;
 
 const form = document.querySelector('.img-upload__form');
 const description = form.querySelector('.text__description');
@@ -13,7 +13,7 @@ export const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper--error'
 });
 
-const checkLengthDescription = (value) => value.length <= MAX__DESCRIPTION;
+const checkLengthDescription = (value) => value.length <= MAX_DESCRIPTION;
 
 const getHashtags = (text) => text.toLowerCase().split(' ').filter((item) => item.length);
 
@@ -22,8 +22,8 @@ const repeatHashtags = (value) => {
     return true;
   }
   const hashtags = getHashtags(value);
-  const arrayCopy = [...new Set(hashtags)];
-  return arrayCopy.length === hashtags.length;
+  const uniqHashtags = [...new Set(hashtags)];
+  return uniqHashtags.length === hashtags.length;
 };
 
 const checkHashtags = (value) => {
@@ -31,7 +31,7 @@ const checkHashtags = (value) => {
     return true;
   }
   const hashtags = getHashtags(value);
-  return hashtags.every((item) => HASHTAG__FORMULA.test(item));
+  return hashtags.every((item) => HASHTAG_FORMULA.test(item));
 };
 
 const checkHashtagCount = (value) => {
@@ -39,19 +39,19 @@ const checkHashtagCount = (value) => {
     return true;
   }
   const hashtags = getHashtags(value);
-  return hashtags.length <= HASHTAGS__COUNT;
+  return hashtags.length <= HASHTAGS_COUNT;
 };
 
 pristine.addValidator(
   description,
   checkLengthDescription,
-  `Длина описания не должна превышать ${MAX__DESCRIPTION}`
+  `Длина описания не должна превышать ${MAX_DESCRIPTION}`
 );
 
 pristine.addValidator(
   hashtagsElem,
   checkHashtags,
-  `Хештег должени начинаться с символа #, содержать только буквы или цифры. Длина хэштега не должна превышать ${MAX__LENGTH__HASHTAG} символов`
+  `Хештег должени начинаться с символа #, содержать только буквы или цифры. Длина хэштега не должна превышать ${MAX_LENGTH_HASHTAG} символов`
 );
 
 pristine.addValidator(
@@ -63,7 +63,7 @@ pristine.addValidator(
 pristine.addValidator(
   hashtagsElem,
   checkHashtagCount,
-  `Количество хэштегов не должна превышать ${HASHTAGS__COUNT}`
+  `Количество хэштегов не должна превышать ${HASHTAGS_COUNT}`
 );
 
 export const isValid = () => pristine.validate();

@@ -7,6 +7,11 @@ import './createEffectsForPhoto.js';
 import { removeClasses } from './createEffectsForPhoto.js';
 import './uploadPhoto.js';
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Сохраняю...'
+};
+
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
 const modal = form.querySelector('.img-upload__overlay');
@@ -15,11 +20,6 @@ const closeModalButton = form.querySelector('.img-upload__cancel');
 const description = form.querySelector('.text__description');
 const hashtagsElem = form.querySelector('.text__hashtags');
 const submitButton = form.querySelector('#upload-submit');
-
-const SubmitButtonText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Сохраняю...'
-};
 
 const shownModal = (isShown = true) => {
   if (isShown) {

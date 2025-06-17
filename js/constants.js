@@ -1,17 +1,11 @@
-export const PHOTO_COUNT = 25;
-export const USER_COUNT = 30;
-export const MIN_AVATAR = 1;
-export const MAX_AVATAR = 6;
-export const MIN_LIKES = 15;
-export const MAX_LIKES = 200;
-export const COMMENTS__STEP = 5;
+export const COMMENTS_STEP = 5;
 export const STEP_SCALE = 25;
 export const MAX_SCALE = 100;
 export const MIN_SCALE = 25;
 export const SCALE_FACTOR = 0.01;
 export const RANDOM_PHOTO_COUNT = 10;
 
-export const FilterEffectSaturation = [
+export const filterEffects = [
   {
     effect: 'chrome',
     settings: {
